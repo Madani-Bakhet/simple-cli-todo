@@ -34,10 +34,14 @@ def delete_task(tasks, index):
         tasks.pop(index)
         save_tasks(tasks)
 
+def search_tasks(tasks, keyword):
+    found = [task for task in tasks if keyword.lower() in task["title"].lower()]
+    show_tasks(found)
+
 def main():
     tasks = load_tasks()
     while True:
-        print("\n1. Show Tasks\n2. Add Task\n3. Mark Done\n4. Delete Task\n5. Exit")
+        print("\n1. Show Tasks\n2. Add Task\n3. Mark Done\n4. Delete Task\n5. Search Task\n6. Exit")
         choice = input("Choose an option: ")
         if choice == "1":
             show_tasks(tasks)
@@ -51,6 +55,9 @@ def main():
             idx = int(input("Task number to delete: ")) - 1
             delete_task(tasks, idx)
         elif choice == "5":
+            keyword = input("Enter keyword to search: ")
+            search_tasks(tasks, keyword)
+        elif choice == "6":
             break
         else:
             print("Invalid choice.")
