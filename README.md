@@ -18,6 +18,10 @@ The purpose of this project is to:
 - Delete a task
 - Save tasks to a file for persistence
 
+## New Features
+
+- Search a task
+
 ## Contributors
 
 - Madani Bakhet
