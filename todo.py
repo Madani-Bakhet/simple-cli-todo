@@ -18,10 +18,11 @@ def show_tasks(tasks):
         print("No tasks found.")
     for idx, task in enumerate(tasks):
         status = "✔" if task["done"] else "✗"
-        print(f"{idx + 1}. [{status}] {task['title']}")
+        due = task.get("due_date", "No due date")
+        print(f"{idx + 1}. [{status}] {task['title']} (Due: {due})")
 
-def add_task(tasks, title):
-    tasks.append({"title": title, "done": False})
+def add_task(tasks, title, due_date):
+    tasks.append({"title": title, "done": False, "due_date": due_date})
     save_tasks(tasks)
 
 def mark_done(tasks, index):
@@ -34,16 +35,21 @@ def delete_task(tasks, index):
         tasks.pop(index)
         save_tasks(tasks)
 
+def search_tasks(tasks, keyword):
+    found = [task for task in tasks if keyword.lower() in task["title"].lower()]
+    show_tasks(found)
+
 def main():
     tasks = load_tasks()
     while True:
-        print("\n1. Show Tasks\n2. Add Task\n3. Mark Done\n4. Delete Task\n5. Exit")
+        print("\n1. Show Tasks\n2. Add Task\n3. Mark Done\n4. Delete Task\n5. Search Task\n6. Exit")
         choice = input("Choose an option: ")
         if choice == "1":
             show_tasks(tasks)
         elif choice == "2":
             title = input("Enter task title: ")
-            add_task(tasks, title)
+            due_date = input("Enter due date (e.g., 2025-07-15): ")
+            add_task(tasks, title, due_date)
         elif choice == "3":
             idx = int(input("Task number to mark done: ")) - 1
             mark_done(tasks, idx)
@@ -51,6 +57,9 @@ def main():
             idx = int(input("Task number to delete: ")) - 1
             delete_task(tasks, idx)
         elif choice == "5":
+            keyword = input("Enter keyword to search: ")
+            search_tasks(tasks, keyword)
+        elif choice == "6":
             break
         else:
             print("Invalid choice.")
