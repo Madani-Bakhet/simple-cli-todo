@@ -16,13 +16,21 @@ def save_tasks(tasks):
 def show_tasks(tasks):
     if not tasks:
         print("No tasks found.")
+        return
     for idx, task in enumerate(tasks):
         status = "✔" if task["done"] else "✗"
         due = task.get("due_date", "No due date")
-        print(f"{idx + 1}. [{status}] {task['title']} (Due: {due})")
+        priority = task.get("priority", "Normal")
+        print(f"{idx + 1}. [{status}] {task['title']} (Due: {due}) [Priority: {priority}]")
 
-def add_task(tasks, title, due_date):
-    tasks.append({"title": title, "done": False, "due_date": due_date})
+
+def add_task(tasks, title, due_date, priority):
+    tasks.append({
+        "title": title,
+        "done": False,
+        "due_date": due_date,
+        "priority": priority
+    })
     save_tasks(tasks)
 
 def mark_done(tasks, index):
@@ -49,7 +57,9 @@ def main():
         elif choice == "2":
             title = input("Enter task title: ")
             due_date = input("Enter due date (e.g., 2025-07-15): ")
-            add_task(tasks, title, due_date)
+            priority = input("Enter priority (High, Medium, Low): ")
+            add_task(tasks, title, due_date, priority)
+
         elif choice == "3":
             idx = int(input("Task number to mark done: ")) - 1
             mark_done(tasks, idx)

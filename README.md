@@ -18,10 +18,11 @@ The purpose of this project is to:
 - Delete a task
 - Search a task
 - Save tasks to a file for persistence
+- Add due date feature to tasks
 
 ## New Features
 
-- Add due date feature to tasks
+- Add priority level to tasks
 
 ## Contributors
 
